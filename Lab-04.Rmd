@@ -1,0 +1,121 @@
+---
+title: "STATS121 Lab 4"
+author: "Your name, Your student ID number"
+date: "Due 8st April at 11:30 PM NZST"
+output: word_document
+---
+
+# Question 1 [2 marks]
+
+### 1(a): What is a sampling frame?
+
+
+
+### 1(b): What is the key difference between a sample survey and a census?
+
+
+
+
+# Question 2 [5 marks]
+
+### 2(a): Randomised experiment, observational study, or sample survey?
+
+
+
+### 2(b): Does the relationship depend on the species of iris?
+
+
+
+### 2(c): Produce a scatter plot
+
+```{r, fig.height = 5, fig.width = 6}
+# Read in the dataset into R and assign it to an object named `irisLengths.df`
+irisLengths.df = read.csv("irisLengths.csv")
+
+# Create a new factor variable within `irisLengths.df` named `Species.f`
+irisLengths.df$Species.f = as.factor(irisLengths.df$Species)
+
+# Write R code to produce a scatter plot of the data 
+
+
+
+# Delete the comment, #, in front of the line below if you added `col = Species.f` to your scatter plot
+# legend("topleft", pch = 1, legend = levels(irisLengths.df$Species.f), col = unique(irisLengths.df$Species.f))
+```
+
+### 2(d): Briefly describe any features of the scatterplot produced in 2(c)
+
+
+
+
+# Question 3 [6 marks]
+
+```{r}
+# Blank code chunk for checking working for Questions 3(a) to 3(e)
+
+
+
+
+
+```
+
+### 3(a): What is the probability that exactly five passengers cannot board a flight?
+
+
+
+### 3(b): Update X.5
+
+```{r, X-5}
+# Change the value of `X.5` to be equal to your answer in 3(a)
+X.5 = 0
+```
+
+### 3(c): What is the probability that at most two passengers cannot board a flight?
+
+
+
+### 3(d): What is the probability that more than two passengers cannot board a flight?
+
+
+
+### 3(e): What is the expected number of passengers who cannot board a flight?
+
+
+
+### 3(f): Simulation
+
+```{r, fig.height = 4, fig.width = 4.5, echo = -1}
+X.plotr = function (n) {
+  # Set up the probability distribution of X
+  X.density = c(0.051, 0.141, 0.276, 0.329, 0.157, X.5) 
+  
+  # Simulate n realisations of X
+  X.star = sample(0:5, size = n, replace = TRUE, prob = X.density)
+  
+  # Tabulate the results and calculate the observed proportions
+  X.table = factor(X.star, levels = 0:5) |> table() |> prop.table() |> as.numeric()
+  
+  # Plot the observed proportions against the probability distribution of X
+  og.par = par(no.readonly = TRUE)
+  par(mai = c(0.8, 0.8, 0.1, 0.1))
+  plot(x = 0:5, y = X.table, type = "h", ylim = c(0, ifelse(any(X.table > 0.6), 1, 0.6)), xlab = "X = x", ylab = "Observed Proportion")
+  abline(h = 0, col = "lightgray")
+  points(x = 0:5, y = X.table, pch = 16)
+  points(x = 0:5, y = X.density, pch = 1, col = 2, cex = 1.5, lwd = 2)
+  legend("topleft", legend = c("Observed", "Actual"), pch = c(16, 1), col = 1:2, pt.cex = c(1, 1.5), lwd = 2, lty = NA, x.intersp = 0)
+  par(og.par)
+}
+
+# Use X.plotr(n) below to simulate n=5, n=50 and n=500 realisations of X
+# For example, X.plotr(10) simulates 10 realisations of X
+
+
+
+
+```
+
+
+
+
+### 3(g): Comment on how your answer to 3(f) is related to the frequentist view of probability
+
